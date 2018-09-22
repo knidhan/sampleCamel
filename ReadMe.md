@@ -79,4 +79,4 @@ To stop and undeploy the example in fabric8:
 1. In the web console, click the *Runtime* button in the navigation bar.
 1. Select the `mychild` container in the *Containers* list, and click the *Stop* button in the top right corner
 
-
+added new comments
