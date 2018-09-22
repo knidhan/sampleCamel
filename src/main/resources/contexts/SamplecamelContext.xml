@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://camel.apache.org/schema/cxf"
+	     xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+          <import resource="classpath:META-INF/cxf/cxf.xml" />
+
+   <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+<cxf:rsServer id="restService" address="/employee"
+serviceClass="com.myapp.domain.EmployeeEndpoint" >
+<cxf:providers>
+<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"></bean>
+</cxf:providers>
+</cxf:rsServer>
+<bean id="employeeResponseTransformer" class="com.myapp.repository.EmployeeResponseTransformer"></bean>
+
+
+
+  <camelContext xmlns="http://camel.apache.org/schema/spring" trace="true" autoStartup="true">
+    <route>
+    <camel:from uri="cxfrs://bean://restService"/>
+    <camel:log message="request uri is ${in.header.operationName}"></camel:log>
+    <camel:bean method="populateResponse()" ref="employeeResponseTransformer"/>
+    </route>
+  </camelContext>
+
+</beans>
