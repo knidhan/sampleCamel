@@ -1,5 +1,5 @@
 # Web MVC with Spring-Boot QuickStart
-
+just a change to validate
 This example demonstrates how you can use Spring Boot and web mvc with a [Java Container](http://fabric8.io/gitbook/javaContainer.html)
 
 The quickstart uses Spring Boot to configure a little Spring MVC application that offers a REST service.
